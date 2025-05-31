@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>飲食指南</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/loginStatus.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: -1;
+        }
+        header {
+            background-image: url('img/header.png');
+            filter: brightness(0.4) contrast(0.8) grayscale(0.3);
+            background-size: cover;
+            background-position: top;
+            height: 80vh;
+            color: white;
+        }
+        #navbar {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        #navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+        #navbar.scrolled .nav-link,
+        #navbar.scrolled .navbar-brand {
+            color: #333 !important;
+        }
+        .navbar-brand img {
+            height: 60px;
+        }
+        .nav-link {
+            color: rgb(45, 45, 45) !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+        .footer-icon {
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+        .icon-circle i {
+            font-size: 1.8em;
+            transition: all 0.3s ease;
+        }
+        .icon-circle::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 1.5s infinite;
+            opacity: 0;
+        }
+        .icon-circle:hover::after {
+            opacity: 1;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+  <script>
+    window.addEventListener('scroll', function () {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+  </script>
+
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-transparent">
+    <div class="container-fluid">
+      <a class="navbar-brand text-black" href="index.html">
+        <img src="img/Logo.png" alt="Her Power Tribe Logo">
+        Her Power Tribe
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="program.html">課程介紹</a></li>
+          <li class="nav-item"><a class="nav-link" href="training.html">訓練計劃</a></li>
+          <li class="nav-item"><a class="nav-link" href="nutrition.html">營養指南</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-menu.html">我的菜單</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="userDropdown">
+              <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" id="userMenu">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- 登入 Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">登入</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="loginEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">密碼</label>
+            <input type="password" class="form-control" id="loginPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">登入</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 註冊 Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">註冊</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm">
+          <div class="mb-3">
+            <label for="registerName" class="form-label">使用者名稱</label>
+            <input type="text" class="form-control" id="registerName" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="registerEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label">密碼</label>
+            <input type="password" class="form-control" id="registerPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerAvatar" class="form-label">選擇頭像</label>
+            <input type="file" class="form-control" id="registerAvatar" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-success">註冊</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+
+<!-- diet Section -->
+<section class="w-100 py-5 text-white position-relative overflow-hidden" style="background-color:#1a1a1a; animation: fadeIn 1.5s ease-in; margin-top: 80px;">
+    <canvas id="particle-canvas" style="position: absolute; top: 0; left: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+    <div class="container position-relative" style="z-index: 1;">
+        <h2 class="mb-4 text-center" style="animation: slideDown 1s ease-in-out;">個人化飲食建議表單</h2>
+        <form id="dietForm" style="animation: fadeInUp 1.2s ease-in-out;">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="age" class="form-label">年齡</label>
+                    <input type="number" class="form-control" id="age" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="height" class="form-label">身高 (cm)</label>
+                    <input type="number" class="form-control" id="height" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="weight" class="form-label">體重 (kg)</label>
+                    <input type="number" class="form-control" id="weight" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="bodyFat" class="form-label">體脂率 (%)</label>
+                    <input type="number" class="form-control" id="bodyFat" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="goal" class="form-label">目標</label>
+                    <select class="form-select" id="goal">
+                        <option value="gain">增肌</option>
+                        <option value="lose">減脂</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-light px-4 py-2" style="transition: all 0.3s ease;">產生飲食建議</button>
+            </div>
+        </form>
+
+        <div id="result" class="mt-5" style="animation: fadeInUp 1.5s ease-in-out;"></div>
+    </div>
+</section>
+
+<style>
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<script>
+// 計算 BMR 與產生個人化飲食建議
+function calculateBMR(age, weight, height, bodyFat) {
+    const leanMass = weight * (1 - bodyFat / 100);
+    return 370 + (21.6 * leanMass);
+}
+
+function generateMealPlan(calories, goal) {
+    let multiplier = goal === 'gain' ? 1.15 : 0.8;
+    let target = calories * multiplier;
+    let proteinRate = goal === 'gain' ? 2 : 1.5; // 每公斤蛋白質攝取
+    let protein = Math.round(proteinRate * (target / 40));
+    let carbs = Math.round(target * 0.45 / 4);
+    let fats = Math.round(target * 0.25 / 9);
+
+    return `
+        <p><strong>每日建議熱量：</strong> ${Math.round(target)} 大卡</p>
+        <p><strong>建議營養分配：</strong></p>
+        <ul>
+            <li>蛋白質：約 ${protein} 克（建議來源：雞胸肉、豆腐、魚、蛋）</li>
+            <li>碳水化合物：約 ${carbs} 克（建議來源：糙米、燕麥、地瓜）</li>
+            <li>脂肪：約 ${fats} 克（建議來源：酪梨、堅果、橄欖油）</li>
+        </ul>
+        <p><strong>飲食類型建議：</strong></p>
+        <p>${goal === 'gain' ? 
+            '以三大營養素均衡搭配，增加總熱量攝取，適合做增肌期飲食安排，包含高蛋白與適量碳水補充。' : 
+            '以減少總熱量並控制碳水與脂肪比例為主，避免加工食品，搭配足夠蛋白質防止肌肉流失。'}</p>
+    `;
+}
+
+document.getElementById('dietForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const age = parseInt(document.getElementById('age').value);
+    const height = parseInt(document.getElementById('height').value);
+    const weight = parseFloat(document.getElementById('weight').value);
+    const bodyFat = parseFloat(document.getElementById('bodyFat').value);
+    const goal = document.getElementById('goal').value;
+
+    const bmr = calculateBMR(age, weight, height, bodyFat);
+    const plan = generateMealPlan(bmr, goal);
+
+    localStorage.setItem("mealPlan", plan);
+
+    document.getElementById('result').innerHTML = `
+        <h4 class="text-center mb-4">個人化飲食建議</h4>
+        <div class="bg-dark text-white p-4 rounded shadow">${plan}</div>
+    `;
+});
+
+// 簡單粒子動畫背景
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = document.querySelector('section').offsetHeight;
+
+let particles = [];
+for (let i = 0; i < 60; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 1,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5
+    });
+}
+
+function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(drawParticles);
+}
+drawParticles();
+</script>
+<!-- Footer Section -->
+<footer class="text-white text-center" style="background-color: #7b7a7a; padding: 30px 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-md-start mb-3">
+                <h4 class="mb-3">Her Power Tribe</h4>
+                <p>元智大學</p>
+                <p>TEL / 0987654321</p>
+                <p>E-mail / ccc987@gmail.com</p>
+                
+            </div>
+            <div class="col-md-6 text-md-end d-flex justify-content-end gap-3">
+                <a href="https://facebook.com" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-facebook"></i>
+                    </div>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-instagram"></i>
+                    </div>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </a>
+                <a href="https://line.me" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-line"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+  
+<script>// 飲食建議儲存（nutrition.html）
+localStorage.setItem("mealPlan", "你的飲食建議內容");</script>
+</body>
+</html>

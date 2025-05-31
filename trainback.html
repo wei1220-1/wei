@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>背部訓練</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/loginStatus.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: -1;
+        }
+        header {
+            background-image: url('img/header.png');
+            filter: brightness(0.4) contrast(0.8) grayscale(0.3);
+            background-size: cover;
+            background-position: top;
+            height: 80vh;
+            color: white;
+        }
+        #navbar {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+        #navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+        #navbar.scrolled .nav-link,
+        #navbar.scrolled .navbar-brand {
+            color: #333 !important;
+        }
+        .navbar-brand img {
+            height: 60px;
+        }
+        .nav-link {
+            color: rgb(45, 45, 45) !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffcc00 !important;
+        }
+        .footer-icon {
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .icon-circle:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.1);
+        }
+        .icon-circle i {
+            font-size: 1.8em;
+            transition: all 0.3s ease;
+        }
+        .icon-circle::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 1.5s infinite;
+            opacity: 0;
+        }
+        .icon-circle:hover::after {
+            opacity: 1;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.5; }
+            
+        }
+        .exercise-section {
+            padding: 100px 20px;
+            background: #fff;
+        }
+        .exercise-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+        }
+        .exercise-card {
+            perspective: 1000px;
+            width: 450px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        .exercise-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+        }
+        .exercise-card:hover .exercise-inner {
+            transform: rotateY(180deg);
+        }
+        .exercise-front, .exercise-back {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .exercise-front img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .exercise-back {
+            background: #222;
+            color: #fff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .exercise-back iframe {
+            width: 100%; height: 150px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+  <script>
+    window.addEventListener('scroll', function () {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+  </script>
+
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-transparent">
+    <div class="container-fluid">
+      <a class="navbar-brand text-black" href="index.html">
+        <img src="img/Logo.png" alt="Her Power Tribe Logo">
+        Her Power Tribe
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="program.html">課程介紹</a></li>
+          <li class="nav-item"><a class="nav-link" href="training.html">訓練計劃</a></li>
+          <li class="nav-item"><a class="nav-link" href="nutrition.html">營養指南</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-menu.html">我的菜單</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="userDropdown">
+              <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" id="userMenu">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- 登入 Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">登入</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="loginEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">密碼</label>
+            <input type="password" class="form-control" id="loginPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">登入</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 註冊 Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registerModalLabel">註冊</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm">
+          <div class="mb-3">
+            <label for="registerName" class="form-label">使用者名稱</label>
+            <input type="text" class="form-control" id="registerName" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="registerEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerPassword" class="form-label">密碼</label>
+            <input type="password" class="form-control" id="registerPassword" required>
+          </div>
+          <div class="mb-3">
+            <label for="registerAvatar" class="form-label">選擇頭像</label>
+            <input type="file" class="form-control" id="registerAvatar" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-success">註冊</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+<section class="exercise-section" style="background-color: #c7bfbf;">
+  <h2 class="exercise-title">練背動作</h2>
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      <!-- 動作卡片 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="exercise-card">
+          <div class="exercise-inner">
+            <div class="exercise-front position-relative">
+              <img src="img/pullup.jpg" alt="引體向上">
+              <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fw-bold bg-dark bg-opacity-50 py-1">引體向上</div>
+            </div>
+            <div class="exercise-back">
+              <h5>引體向上</h5>
+              <p>經典背部訓練動作，強化闊背肌與手臂力量。</p>
+              <iframe src="https://www.youtube.com/embed/eGo4IYlbE5g" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 動作卡片 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="exercise-card">
+          <div class="exercise-inner">
+            <div class="exercise-front position-relative">
+              <img src="img/bentoverrow.jpg" alt="俯身划船">
+              <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fw-bold bg-dark bg-opacity-50 py-1">俯身划船</div>
+            </div>
+            <div class="exercise-back">
+              <h5>俯身划船</h5>
+              <p>針對上背與核心的訓練，有效雕塑背部線條。</p>
+              <iframe src="https://www.youtube.com/embed/vT2GjY_Umpw" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 動作卡片 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="exercise-card">
+          <div class="exercise-inner">
+            <div class="exercise-front position-relative">
+              <img src="img/Lat pulldown.jpg" alt="高位下拉">
+              <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fw-bold bg-dark bg-opacity-50 py-1">高位下拉</div>
+            </div>
+            <div class="exercise-back">
+              <h5>高位下拉</h5>
+              <p>模擬引體向上的訓練，適合初學者強化背部。</p>
+              <iframe src="https://www.youtube.com/embed/CAwf7n6Luuc" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 動作卡片 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="exercise-card">
+          <div class="exercise-inner">
+            <div class="exercise-front position-relative">
+              <img src="img/seatedrow.jpg" alt="坐姿划船">
+              <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fw-bold bg-dark bg-opacity-50 py-1">坐姿划船</div>
+            </div>
+            <div class="exercise-back">
+              <h5>坐姿划船</h5>
+              <p>集中鍛鍊中背部與肩胛骨控制能力。</p>
+              <iframe src="https://www.youtube.com/embed/GZbfZ033f74" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 動作卡片 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="exercise-card">
+          <div class="exercise-inner">
+            <div class="exercise-front position-relative">
+              <img src="img/1armrow.jpg" alt="單手啞鈴划船">
+              <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fw-bold bg-dark bg-opacity-50 py-1">單手啞鈴划船</div>
+            </div>
+            <div class="exercise-back">
+              <h5>單手啞鈴划船</h5>
+              <p>強化左右背肌平衡與穩定性。</p>
+              <iframe src="https://www.youtube.com/embed/pYcpY20QaE8" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 動作卡片 6 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="exercise-card">
+          <div class="exercise-inner">
+            <div class="exercise-front position-relative">
+              <img src="img/facerow.jpg" alt="繩索面拉">
+              <div class="position-absolute bottom-0 start-0 w-100 text-center text-white fw-bold bg-dark bg-opacity-50 py-1">繩索面拉</div>
+            </div>
+            <div class="exercise-back">
+              <h5>繩索面拉</h5>
+              <p>提升肩胛穩定性與後束三角肌力量。</p>
+              <iframe src="https://www.youtube.com/embed/rep-qVOkqgk" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="text-white text-center" style="background-color: #7b7a7a; padding: 30px 20px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-md-start mb-3">
+                <h4 class="mb-3">Her Power Tribe</h4>
+                <p>元智大學</p>
+                <p>TEL / 0987654321</p>
+                <p>E-mail / ccc987@gmail.com</p>
+                
+            </div>
+            <div class="col-md-6 text-md-end d-flex justify-content-end gap-3">
+                <a href="https://facebook.com" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-facebook"></i>
+                    </div>
+                </a>
+                <a href="https://instagram.com" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-instagram"></i>
+                    </div>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                </a>
+                <a href="https://line.me" target="_blank" class="footer-icon">
+                    <div class="icon-circle">
+                        <i class="bi bi-line"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+  
+
+</body>
+</html>
