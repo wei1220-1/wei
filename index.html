@@ -3,18 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Her Power Tribe - Main Visual</title>
+    <title>我的菜單</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f9f9f9;
             color: #333;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            z-index: -1;
         }
         header {
             background-image: url('img/header.png');
@@ -30,8 +45,22 @@
             z-index: 1000;
             transition: background-color 0.3s ease;
         }
+        #navbar.scrolled {
+            background-color: rgba(255, 255, 255, 0.9) !important;
+        }
+        #navbar.scrolled .nav-link,
+        #navbar.scrolled .navbar-brand {
+            color: #181818 !important;
+        }
         .navbar-brand img {
             height: 60px;
+        }
+        .nav-link {
+            color: rgb(255, 254, 254) !important;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #ffcc00 !important;
         }
         .footer-icon {
             text-decoration: none;
@@ -74,64 +103,131 @@
             0% { transform: scale(0.9); opacity: 0.5; }
             50% { transform: scale(1.1); opacity: 1; }
             100% { transform: scale(0.9); opacity: 0.5; }
+            
         }
-        .nav-link {
-            color: white !important;
-            transition: color 0.3s ease;
+        .exercise-section {
+            padding: 100px 20px;
+            background: #fff;
         }
-        .nav-link:hover {
-            color: #ffcc00 !important;
+        .exercise-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
         }
-        #navbar.scrolled {
-            background-color: rgba(255, 255, 255, 0.9) !important;
+        .exercise-card {
+            perspective: 1000px;
+            width: 450px;
+            height: 300px;
+            margin: 0 auto;
         }
-        #navbar.scrolled .nav-link,
-        #navbar.scrolled .navbar-brand {
-            color: #333 !important;
+        .exercise-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
         }
+        .exercise-card:hover .exercise-inner {
+            transform: rotateY(180deg);
+        }
+        .exercise-front, .exercise-back {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .exercise-front img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .exercise-back {
+            background: #222;
+            color: #fff;
+            transform: rotateY(180deg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .exercise-back iframe {
+            width: 100%; height: 150px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+        }
+
     </style>
 </head>
 <body>
+  <script>
+    window.addEventListener('scroll', function () {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+  </script>
 
-<script>
-window.addEventListener('scroll', function () {
-    const navbar = document.getElementById('navbar');
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-</script>
-<nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-transparent">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-transparent">
     <div class="container-fluid">
-        <a class="navbar-brand text-white" href="index.html">
-            <img src="img/Logo.png" alt="Her Power Tribe Logo">
-            Her Power Tribe
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="program.html">課程介紹</a></li>
-                <li class="nav-item"><a class="nav-link" href="training.html">訓練計劃</a></li>
-                <li class="nav-item"><a class="nav-link" href="nutrition.html">營養指南</a></li>
-                <li class="nav-item"><a class="nav-link" href="my-menu.html">我的菜單</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="userDropdown">
-                        <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" id="userMenu">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</a></li>
-                    </ul>
-                </li>
+      <a class="navbar-brand text-white" href="index.html">
+        <img src="img/Logo.png" alt="Her Power Tribe Logo">
+        Her Power Tribe
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="program.html">課程介紹</a></li>
+          <li class="nav-item"><a class="nav-link" href="training.html">訓練計劃</a></li>
+          <li class="nav-item"><a class="nav-link" href="nutrition.html">營養指南</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-menu.html">我的菜單</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="userDropdown">
+              <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" id="userMenu">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</a></li>
             </ul>
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
-</nav>
+  </nav>
+<!-- 111111111111111-->
+<section class="w-100 py-5 text-white" style="background-color:#1a1a1a;">
+  <div class="container">
+    <h2 class="text-center mb-4">我的個人建議菜單</h2>
+    <div id="menuSummary" class="fade-in"></div>
+  </div>
+</section>
+<script>
+ window.addEventListener('DOMContentLoaded', function () {
+  const training = localStorage.getItem("trainingPlan");
+  const meal = localStorage.getItem("mealPlan");
+  const container = document.getElementById("menuSummary");
 
+  if (training || meal) {
+    let html = `<div class="bg-dark text-white p-4 rounded shadow">`;
+    if (training) html += `<h5>訓練建議：</h5><p>${training}</p>`;
+    if (meal) html += `<h5>飲食建議：</h5><p>${meal}</p>`;
+    html += `</div>`;
+    container.innerHTML = html;
+  } else {
+    container.innerHTML = `<p class="text-white">目前尚未填寫問卷，請前往 <a href="training.html" class="text-warning">訓練計畫</a> 與 <a href="nutrition.html" class="text-warning">飲食建議</a> 頁面填寫。</p>`;
+  }
+});
+
+</script>
 <!-- 登入 Modal -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -190,175 +286,58 @@ window.addEventListener('scroll', function () {
   </div>
 </div>
 
-
-<div id="headerCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="img/站繩.jpg" class="d-block w-100" style="height: 80vh; object-fit: cover;" alt="Slide 1">
-        </div>
-        <div class="carousel-item">
-            <img src="img/硬舉.jpg" class="d-block w-100" style="height: 80vh; object-fit: cover;" alt="Slide 2">
-        </div>
-        <div class="carousel-item">
-            <img src="img/posing1.jpg" class="d-block w-100" style="height: 80vh; object-fit: cover;" alt="Slide 3">
-        </div>
-        <div class="carousel-item">
-            <img src="img/瑜珈.jpg" class="d-block w-100" style="height: 80vh; object-fit: cover;" alt="Slide 4">
-        </div>
-        <div class="carousel-item">
-            <img src="img/posing1.jpg" class="d-block w-100" style="height: 80vh; object-fit: cover;" alt="Slide 5">
-        </div>
-        <div class="carousel-item">
-            <img src="img/引體.jpg" class="d-block w-100" style="height: 80vh; object-fit: cover;" alt="Slide 6">
-        </div>
-    </div>
-<!-- 品牌名稱與 SLOGAN 文字區塊 -->
-<div class="position-absolute top-50 start-50 translate-middle text-center" style="z-index: 10;">
-  <h1 style="font-size: 4em; color: white; font-weight: 800; text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">
-    Her Power Tribe
-  </h1>
-  <p style="font-size: 1.5em; color: #f9f9f9; text-shadow: 1px 1px 4px rgba(0,0,0,0.6);">
-    Empowering Women Through Fitness
-  </p>
-</div>
-    <!-- 指示器區域 -->
-    <div id="carouselIndicators" class="position-absolute bottom-0 start-50 translate-middle-x mb-3" 
-         style="display: flex; gap: 10px;">
-        <div class="indicator active"></div>
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-        <div class="indicator"></div>
-    </div>
-
-    <button class="carousel-control-prev" type="button" data-bs-target="#headerCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#headerCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-
-<style>
-    .indicator {
-        width: 40px;   /* 調整寬度 */
-        height: 5px;   /* 調整高度 */
-        background-color: rgba(255, 255, 255, 0.5);
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        border-radius: 3px;
-    }
-    .indicator.active {
-        background-color: white;
-        transform: scale(1.2); /* 增加一點縮放效果 */
-    }
-</style>
-
 <script>
-    const indicators = document.querySelectorAll('.indicator');
-    const headerCarousel = document.getElementById('headerCarousel');
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = '小明';
+    const userMenu = document.getElementById('userMenu');
+    const userDropdown = document.getElementById('userDropdown');
+    userDropdown.innerHTML = `<span class="fw-bold">${name.charAt(0)}</span>`;
+    userMenu.innerHTML = '<li><a class="dropdown-item" href="#">登出</a></li>';
+    const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+    loginModal.hide();
+    alert("登入成功！");
+  });
 
-    headerCarousel.addEventListener('slide.bs.carousel', function (e) {
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-        indicators[e.to].classList.add('active');
-    });
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+    registerModal.hide();
+    alert("註冊成功！");
+  });
+   function bindLogout() {
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const userMenu = document.getElementById('userMenu');
+        const userDropdown = document.getElementById('userDropdown');
+
+        // 恢復 icon 為原本樣式
+        userDropdown.innerHTML = `
+          <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+        `;
+
+        // 恢復登入註冊選項
+        userMenu.innerHTML = `
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">登入</a></li>
+          <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">註冊</a></li>
+        `;
+
+        alert("登出成功！");
+      });
+    }
+  }
+   // Initialize on load
+  window.addEventListener('DOMContentLoaded', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const name = localStorage.getItem('userName') || '';
+    updateUserUI(isLoggedIn, name);
+  });
+</script>
 </script>
 
-<!-- 關於我們 & 社群互動 區塊 -->
-
-<div class="container-fluid d-flex p-0" style="gap: 0;">
-
-    <div class="image-container" style="height: 80vh; width: 30%; overflow: hidden;">
-        <div class="image-box position-relative" style="height: 80vh; background-color: black; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;" 
-             onmouseover="this.style.backgroundColor='#d3d3d3'; this.style.transform='scale(1.05)'" 
-             onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
-            <div class="text-white" style="font-size: 1em; font-weight: bold; transition: all 0.3s ease;">
-            <a href="about.html" class="text-white text-decoration-none" style="font-size: 3em; font-weight: bold; transition: all 0.3s ease;">
-             關於我們
-            </a></div>
-        </div>
-    </div>
-
-    <div class="image-container" style="height: 80vh; width: 70%; overflow: hidden; position: relative;">
-    <div class="image-box position-relative" style="height: 80vh;   transition: all 0.3s ease;" 
-             onmouseover="this.style.backgroundColor='#d3d3d3'; this.style.transform='scale(1.05)'" 
-             onmouseout="this.style.backgroundColor='black'; this.style.transform='scale(1)';">
-         <a href="social.html">   <img src="img/social.jpg" alt="社群互動" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
-            <div class="position-absolute d-flex justify-content-center align-items-center" style="top: 0; left: 0; width: 100%; height: 100%; font-size: 3em; font-weight: bold; color: white; background-color: rgba(0, 0, 0, 0.4); z-index: 10;">
-                社群互動
-            </div></a>
-        </div>
-    </div>
-
-</div>
-
-
-
-<!-- 運動好處 2 卡片展示區 -->
-
-<div class="container-fluid d-flex p-0" style="gap: 0;">
-
-    <!-- 右側卡片 (圖片顯示區) -->
-    <div id="exerciseCard" class="image-container" style="height: 80vh; width: 70%; overflow: hidden; cursor: pointer;">
-        <div class="image-box position-relative" style="height: 80vh; background-color: black; display: flex; justify-content: center; align-items: center; transition: all 0.3s ease;">
-            <img src="img/肩推.jpg" alt="女性運動" style="width: 100%; height: 100%; object-fit: cover; transition: all 0.3s ease;">
-            <div class="position-absolute d-flex justify-content-center align-items-center" style="top: 0; left: 0; width: 100%; height: 100%; font-size: 2.5em; font-weight: bold; color: white; background-color: rgba(0, 0, 0, 0.4);">
-                女性運動好處
-            </div>
-        </div>
-    </div>
-
-    <!-- 左側展示卡片 (文字展示區) -->
-    <div id="exerciseInfo" class="image-container" style="height: 80vh; width: 30%; overflow: hidden; background-color: #333333; color: white; display: flex; align-items: center; justify-content: center; padding: 30px; opacity: 0; transition: opacity 0.5s ease, background-color 0.3s ease;">
-        <div>
-            <h3>✨ 女性運動的好處</h3>
-            <ul>
-                <li><strong>1. 降低死亡與心血管疾病風險：</strong> 女性每週進行 140 分鐘的中度有氧運動（如快走）即可降低 18% 的過早死亡風險，男性需達到 300 分鐘才有相同效果。在劇烈運動方面，女性每週僅需 57 分鐘即可降低 19% 的死亡風險，男性則需 110 分鐘。</li>
-                <li><strong>2. 肌力訓練的額外好處：</strong> 每週進行肌力訓練的女性，其過早死亡風險降低 19%，心血管相關死亡風險更下降 30%，而男性分別為 11%。</li>
-                <li><strong>3. 更年期與骨骼健康：</strong> 更年期女性透過肌力訓練可有效對抗肌肉與骨質流失，降低骨質疏鬆風險，並改善情緒與睡眠品質。</li>
-                <li><strong>4. 心理健康與情緒穩定：</strong> 運動能促進腦內啡釋放，提升情緒，減輕焦慮與憂鬱症狀。對於承受多重角色壓力的女性，運動提供了釋放壓力的途徑，有助於緩解日常生活中的緊張感。</li>
-            </ul>
-        </div>
-    </div>
-
-</div>
-
-<script>
-    const exerciseCard = document.getElementById('exerciseCard');
-    const infoBox = document.getElementById('exerciseInfo');
-
-    exerciseCard.addEventListener('mouseover', function() {
-        infoBox.style.opacity = 1;
-        infoBox.style.backgroundColor = '#555555';
-    });
-
-    exerciseCard.addEventListener('mouseout', function() {
-        infoBox.style.opacity = 0;
-        infoBox.style.backgroundColor = '#333333';
-    });
-</script>
-
-<script>
-    document.getElementById('exerciseCard').addEventListener('click', function() {
-        const infoBox = document.getElementById('exerciseInfo');
-        infoBox.style.opacity = 1;
-    });
-</script>
-
-<style>
-    .card-box {
-        background-color: #1e1e1e;
-        border: 1px solid #333;
-        transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-
-    .card-box:hover {
-        transform: scale(1.05);
-        background-color: #333;
-    }
-</style>
 
 <script>
     AOS.init({
@@ -403,6 +382,6 @@ window.addEventListener('scroll', function () {
         </div>
     </div>
 </footer>
- <script src="js/loginStatus.js"></script>
+  <script src="js/loginStatus.js"></script>
 </body>
 </html>
